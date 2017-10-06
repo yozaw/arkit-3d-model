@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tXr-a1-R10">
+            <objects>
+                <viewController id="BV1-FR-VrT" customClass="ViewController" customModule="arApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="s7R-ld-PtH"/>
+                        <viewControllerLayoutGuide type="bottom" id="oY1-oj-9Gd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="e7K-kC-rc6" userLabel="Scene View" customClass="ARSCNView">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="miw-17-ezo">
+                                <rect key="frame" x="334" y="487" width="31" height="30"/>
+                                <state key="normal" title="拡大"/>
+                                <connections>
+                                    <action selector="zoomin:" destination="BV1-FR-VrT" eventType="touchUpInside" id="yEE-eE-AoM"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hIV-MB-Lk2">
+                                <rect key="frame" x="334" y="527" width="31" height="30"/>
+                                <state key="normal" title="縮小"/>
+                                <connections>
+                                    <action selector="zoomout:" destination="BV1-FR-VrT" eventType="touchUpInside" id="KaV-Qn-faV"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BBS-B3-hie">
+                                <rect key="frame" x="319" y="567" width="46" height="30"/>
+                                <state key="normal" title="左回転"/>
+                                <connections>
+                                    <action selector="rotate_left:" destination="BV1-FR-VrT" eventType="touchUpInside" id="zie-gK-PMN"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9BY-3b-vRX">
+                                <rect key="frame" x="319" y="607" width="46" height="30"/>
+                                <state key="normal" title="右回転"/>
+                                <connections>
+                                    <action selector="rotate_right:" destination="BV1-FR-VrT" eventType="touchUpInside" id="OR5-Sb-iai"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CPH-Na-wVp">
+                                <rect key="frame" x="288" y="447" width="77" height="30"/>
+                                <state key="normal" title="中心に移動"/>
+                                <connections>
+                                    <action selector="move:" destination="BV1-FR-VrT" eventType="touchUpInside" id="sT3-R0-8aS"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="hIV-MB-Lk2" firstAttribute="trailing" secondItem="CPH-Na-wVp" secondAttribute="trailing" id="2MM-w7-yTO"/>
+                            <constraint firstItem="miw-17-ezo" firstAttribute="top" secondItem="CPH-Na-wVp" secondAttribute="bottom" constant="10" id="715-hU-Rrs"/>
+                            <constraint firstAttribute="trailing" secondItem="9BY-3b-vRX" secondAttribute="trailing" constant="10" id="V4y-06-YDy"/>
+                            <constraint firstItem="oY1-oj-9Gd" firstAttribute="top" secondItem="9BY-3b-vRX" secondAttribute="bottom" constant="30" id="VHM-O6-3mE"/>
+                            <constraint firstItem="9BY-3b-vRX" firstAttribute="trailing" secondItem="CPH-Na-wVp" secondAttribute="trailing" id="WnT-kj-FFK"/>
+                            <constraint firstItem="BBS-B3-hie" firstAttribute="top" secondItem="hIV-MB-Lk2" secondAttribute="bottom" constant="10" id="dAN-gB-BGh"/>
+                            <constraint firstItem="hIV-MB-Lk2" firstAttribute="top" secondItem="miw-17-ezo" secondAttribute="bottom" constant="10" id="hXw-vu-wpZ"/>
+                            <constraint firstItem="9BY-3b-vRX" firstAttribute="top" secondItem="BBS-B3-hie" secondAttribute="bottom" constant="10" id="prW-6t-QG5"/>
+                            <constraint firstItem="miw-17-ezo" firstAttribute="trailing" secondItem="CPH-Na-wVp" secondAttribute="trailing" id="sMX-UZ-Auj"/>
+                            <constraint firstItem="BBS-B3-hie" firstAttribute="trailing" secondItem="CPH-Na-wVp" secondAttribute="trailing" id="vkH-1w-FGw"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="sceneView" destination="e7K-kC-rc6" id="Fdk-yK-B2u"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="37.600000000000001" y="74.212893553223395"/>
+        </scene>
+    </scenes>
+</document>
