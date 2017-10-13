@@ -7,13 +7,15 @@
 //
 
 import UIKit
-import SceneKit
 import ARKit
 
 class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
-    var node: SCNNode!
+    var plantNode: SCNNode!
+    var buildingNode: SCNNode!
+    var townNode: SCNNode!
+
     var scale: Double!
     var angle: Float!
     
@@ -26,48 +28,88 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
         
-        // SCNNodeを作成して、ARSCNViewのシーンに追加
-        let url = Bundle.main.url(forResource: "plant1_0", withExtension: "dae")!
-        //let url = Bundle.main.url(forResource: "Shiozaki_0", withExtension: "dae")!
+        // plantのSCNNodeを作成
+        let plantUrl = Bundle.main.url(forResource: "plant", withExtension: "dae")!
         do {
-            // .dae ファイルのノード（3Dオブジェクト）を取得し、新たにSCNNodeを作成する
-            let scene = try SCNScene(url: url, options: nil)
-            //node = scene.rootNode.childNode(withName: "shiozaki", recursively: true)
-            node = scene.rootNode.childNode(withName: "plant", recursively: true)
-
-            // スケール、表示位置、角度の設定
-            // モデルの実寸の1/10倍
-            //scale = 0.01
-            scale = 0.1
-            node?.scale = SCNVector3(scale, scale, scale)
-            // カメラの表示中心位置に奥行き1mで表示
-            node?.position = SCNVector3(0, 0, -1)
-            // オイラー角でβに-5度回転する
-            angle = -5
-            node?.eulerAngles = SCNVector3(0, -5 * (Float.pi / 180), 0)
-            
-            //作成したノードをシーンビューのシーンに追加
-            sceneView.scene.rootNode.addChildNode(node!)
-            
+            // .daeファイルのノード（3Dオブジェクト）を取得し、新たにSCNNodeを作成する
+            let plantScene = try SCNScene(url: plantUrl, options: nil)
+            plantNode = plantScene.rootNode.childNode(withName: "plant", recursively: true)
         } catch {
             print(error.localizedDescription)
         }
         
+        // buildingのSCNNodeを作成
+        let buildingUrl = Bundle.main.url(forResource: "building", withExtension: "dae")!
+        do {
+            let buildingScene = try SCNScene(url: buildingUrl, options: nil)
+            buildingNode = buildingScene.rootNode.childNode(withName: "building", recursively: true)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        // townのSCNNodeを作成
+        let nagatachoUrl = Bundle.main.url(forResource: "town", withExtension: "dae")!
+        do {
+            let nagatachoScene = try SCNScene(url: nagatachoUrl, options: nil)
+            townNode = nagatachoScene.rootNode.childNode(withName: "town", recursively: true)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        // スケール、表示位置、角度の設定
+        // モデルの実寸の1/10倍
+        scale = 0.1
+        plantNode?.scale = SCNVector3(scale, scale, scale)
+        // カメラの表示中心位置に奥行き1mで表示
+        plantNode?.position = SCNVector3(0, 0, -1)
+        // オイラー角でβに-5度回転する
+        angle = -5
+        plantNode?.eulerAngles = SCNVector3(0, angle * (Float.pi / 180), 0)
+        
+        //作成したplantのノードをARSCNViewのシーンに追加
+        sceneView.scene.rootNode.addChildNode(plantNode!)
+        print(sceneView.scene.rootNode.childNodes.count)
+
         // 画面の中心にカーソルを表示
         drawCenterSign()
         
     }
     
     
+    @IBAction func nodeChange(_ sender: UISegmentedControl) {
+        
+        buildingNode.removeFromParentNode()
+        plantNode.removeFromParentNode()
+        townNode.removeFromParentNode()
+        
+        if sender.selectedSegmentIndex == 0 {
+            // ノードをplantに変更
+            scale = 0.1
+            //buildingNode?.scale = SCNVector3(scale, scale, scale)
+            sceneView.scene.rootNode.addChildNode(plantNode!)
+        } else if sender.selectedSegmentIndex == 1 {
+            // ノードをbuildingに変更
+            scale = 0.001
+            //buildingNode?.scale = SCNVector3(scale, scale, scale)
+            sceneView.scene.rootNode.addChildNode(buildingNode!)
+        } else if sender.selectedSegmentIndex == 2 {
+            // ノードをtownに変更
+            scale = 0.0001
+            //nagatachoNode?.scale = SCNVector3(scale, scale, scale)
+            sceneView.scene.rootNode.addChildNode(townNode!)
+        }
+        
+    }
+    
     @IBAction func move(_ sender: UIButton) {
         
-        // 画面の中心にある平面の座標を取得
-        let hitResults = sceneView.hitTest(sceneView.center, types: .estimatedHorizontalPlane)
+        // 画面の中心にある座標を取得
+        let hitResults = sceneView.hitTest(sceneView.center, types: .featurePoint)
         if !hitResults.isEmpty {
-            if let hitTResult = hitResults.first {
-                node?.scale = SCNVector3(scale, scale, scale)
+            if let hitResult = hitResults.first {
+                sceneView.scene.rootNode.childNodes.last?.scale = SCNVector3(scale, scale, scale)
                 // 現実世界の座標にノードを移動
-                node?.position = SCNVector3(hitTResult.worldTransform.columns.3.x, hitTResult.worldTransform.columns.3.y, -1)
+                sceneView.scene.rootNode.childNodes.last?.position = SCNVector3(hitResult.worldTransform.columns.3.x, hitResult.worldTransform.columns.3.y, hitResult.worldTransform.columns.3.z)
             }
         }
         
@@ -75,26 +117,26 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     @IBAction func zoomin(_ sender: UIButton) {
         // スケールを拡大
-        scale = scale + 0.001
-        node?.scale = SCNVector3(scale, scale, scale)
+        scale = scale * 1.5
+        sceneView.scene.rootNode.childNodes.last?.scale = SCNVector3(scale, scale, scale)
     }
     
     @IBAction func zoomout(_ sender: UIButton) {
         // スケールを縮小
-        scale = scale - 0.001
-        node?.scale = SCNVector3(scale, scale, scale)
+        scale = scale / 1.5
+        sceneView.scene.rootNode.childNodes.last?.scale = SCNVector3(scale, scale, scale)
     }
     
     @IBAction func rotate_left(_ sender: UIButton) {
         // オイラー角でβに-5度回転する
         angle = angle - 5
-        node?.eulerAngles = SCNVector3(0, angle * (Float.pi / 180), 0)
+        sceneView.scene.rootNode.childNodes.last?.eulerAngles = SCNVector3(0, angle * (Float.pi / 180), 0)
     }
     
     @IBAction func rotate_right(_ sender: UIButton) {
         // オイラー角でβに5度回転する
         angle = angle + 5
-        node?.eulerAngles = SCNVector3(0, angle * (Float.pi / 180), 0)
+        sceneView.scene.rootNode.childNodes.last?.eulerAngles = SCNVector3(0, angle * (Float.pi / 180), 0)
     }
     
    

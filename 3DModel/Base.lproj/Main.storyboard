@@ -11,7 +11,7 @@
         <!--View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="ViewController" customModule="arApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BV1-FR-VrT" customClass="ViewController" customModule="_DModel" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="s7R-ld-PtH"/>
                         <viewControllerLayoutGuide type="bottom" id="oY1-oj-9Gd"/>
@@ -55,16 +55,29 @@
                                     <action selector="move:" destination="BV1-FR-VrT" eventType="touchUpInside" id="sT3-R0-8aS"/>
                                 </connections>
                             </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="hlO-zA-jYS">
+                                <rect key="frame" x="10" y="30" width="212" height="29"/>
+                                <segments>
+                                    <segment title="Plant"/>
+                                    <segment title="Buildings"/>
+                                    <segment title="Town"/>
+                                </segments>
+                                <connections>
+                                    <action selector="nodeChange:" destination="BV1-FR-VrT" eventType="valueChanged" id="U9u-nw-Wq0"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="hIV-MB-Lk2" firstAttribute="trailing" secondItem="CPH-Na-wVp" secondAttribute="trailing" id="2MM-w7-yTO"/>
                             <constraint firstItem="miw-17-ezo" firstAttribute="top" secondItem="CPH-Na-wVp" secondAttribute="bottom" constant="10" id="715-hU-Rrs"/>
+                            <constraint firstItem="hlO-zA-jYS" firstAttribute="top" secondItem="s7R-ld-PtH" secondAttribute="bottom" constant="10" id="OuL-l5-SNr"/>
                             <constraint firstAttribute="trailing" secondItem="9BY-3b-vRX" secondAttribute="trailing" constant="10" id="V4y-06-YDy"/>
                             <constraint firstItem="oY1-oj-9Gd" firstAttribute="top" secondItem="9BY-3b-vRX" secondAttribute="bottom" constant="30" id="VHM-O6-3mE"/>
                             <constraint firstItem="9BY-3b-vRX" firstAttribute="trailing" secondItem="CPH-Na-wVp" secondAttribute="trailing" id="WnT-kj-FFK"/>
                             <constraint firstItem="BBS-B3-hie" firstAttribute="top" secondItem="hIV-MB-Lk2" secondAttribute="bottom" constant="10" id="dAN-gB-BGh"/>
+                            <constraint firstItem="hlO-zA-jYS" firstAttribute="leading" secondItem="e7K-kC-rc6" secondAttribute="leading" constant="10" id="ghJ-WO-Qz2"/>
                             <constraint firstItem="hIV-MB-Lk2" firstAttribute="top" secondItem="miw-17-ezo" secondAttribute="bottom" constant="10" id="hXw-vu-wpZ"/>
                             <constraint firstItem="9BY-3b-vRX" firstAttribute="top" secondItem="BBS-B3-hie" secondAttribute="bottom" constant="10" id="prW-6t-QG5"/>
                             <constraint firstItem="miw-17-ezo" firstAttribute="trailing" secondItem="CPH-Na-wVp" secondAttribute="trailing" id="sMX-UZ-Auj"/>
