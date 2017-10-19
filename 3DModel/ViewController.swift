@@ -78,25 +78,26 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     @IBAction func nodeChange(_ sender: UISegmentedControl) {
         
-        buildingNode.removeFromParentNode()
-        plantNode.removeFromParentNode()
-        townNode.removeFromParentNode()
-        
         if sender.selectedSegmentIndex == 0 {
             // ノードをplantに変更
-            scale = 0.1
-            //buildingNode?.scale = SCNVector3(scale, scale, scale)
+            buildingNode.removeFromParentNode()
+            townNode.removeFromParentNode()
             sceneView.scene.rootNode.addChildNode(plantNode!)
+            scale = 0.1
+
         } else if sender.selectedSegmentIndex == 1 {
             // ノードをbuildingに変更
-            scale = 0.001
-            //buildingNode?.scale = SCNVector3(scale, scale, scale)
+            plantNode.removeFromParentNode()
+            townNode.removeFromParentNode()
             sceneView.scene.rootNode.addChildNode(buildingNode!)
+            scale = 0.001
+
         } else if sender.selectedSegmentIndex == 2 {
             // ノードをtownに変更
-            scale = 0.0001
-            //nagatachoNode?.scale = SCNVector3(scale, scale, scale)
+            buildingNode.removeFromParentNode()
+            plantNode.removeFromParentNode()
             sceneView.scene.rootNode.addChildNode(townNode!)
+            scale = 0.0001
         }
         
     }
